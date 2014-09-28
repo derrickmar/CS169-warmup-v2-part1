@@ -2,12 +2,12 @@
   "stats": {
     "suites": 4,
     "tests": 11,
-    "passes": 11,
+    "passes": 8,
     "pending": 0,
-    "failures": 0,
-    "start": "2014-09-28T04:43:42.022Z",
-    "end": "2014-09-28T04:43:43.328Z",
-    "duration": 1306
+    "failures": 3,
+    "start": "2014-09-28T05:10:57.339Z",
+    "end": "2014-09-28T05:10:59.482Z",
+    "duration": 2143
   },
   "tests": [
     {
@@ -18,12 +18,12 @@
     {
       "title": "should return -1 when the value is not present",
       "fullTitle": "Sanity Checks #indexOf() should return -1 when the value is not present",
-      "duration": 1
+      "duration": 0
     },
     {
       "title": "should create user without error",
       "fullTitle": "User Create A User should create user without error",
-      "duration": 3
+      "duration": 2
     },
     {
       "title": "should create user with properties",
@@ -32,13 +32,12 @@
     },
     {
       "title": "should save user without error",
-      "fullTitle": "User Create A User should save user without error",
-      "duration": 259
+      "fullTitle": "User Create A User should save user without error"
     },
     {
       "title": "should error when adding duplicate user",
       "fullTitle": "User Create A User should error when adding duplicate user",
-      "duration": 334
+      "duration": 196
     },
     {
       "title": "should error when adding user with no username",
@@ -48,25 +47,36 @@
     {
       "title": "should error when adding user with user too long",
       "fullTitle": "User Create A User should error when adding user with user too long",
-      "duration": 1
+      "duration": 94
     },
     {
       "title": "should error when adding user with password too long",
       "fullTitle": "User Create A User should error when adding user with password too long",
-      "duration": 1
+      "duration": 92
     },
     {
       "title": "should login user with count 2",
-      "fullTitle": "User Create A User should login user with count 2",
-      "duration": 240
+      "fullTitle": "User Create A User should login user with count 2"
     },
     {
       "title": "should fail to login user because of bad crednentials",
-      "fullTitle": "User Create A User should fail to login user because of bad crednentials",
-      "duration": 332
+      "fullTitle": "User Create A User should fail to login user because of bad crednentials"
     }
   ],
-  "failures": [],
+  "failures": [
+    {
+      "title": "should save user without error",
+      "fullTitle": "User Create A User should save user without error"
+    },
+    {
+      "title": "should login user with count 2",
+      "fullTitle": "User Create A User should login user with count 2"
+    },
+    {
+      "title": "should fail to login user because of bad crednentials",
+      "fullTitle": "User Create A User should fail to login user because of bad crednentials"
+    }
+  ],
   "passes": [
     {
       "title": "should pass",
@@ -76,12 +86,12 @@
     {
       "title": "should return -1 when the value is not present",
       "fullTitle": "Sanity Checks #indexOf() should return -1 when the value is not present",
-      "duration": 1
+      "duration": 0
     },
     {
       "title": "should create user without error",
       "fullTitle": "User Create A User should create user without error",
-      "duration": 3
+      "duration": 2
     },
     {
       "title": "should create user with properties",
@@ -89,14 +99,9 @@
       "duration": 4
     },
     {
-      "title": "should save user without error",
-      "fullTitle": "User Create A User should save user without error",
-      "duration": 259
-    },
-    {
       "title": "should error when adding duplicate user",
       "fullTitle": "User Create A User should error when adding duplicate user",
-      "duration": 334
+      "duration": 196
     },
     {
       "title": "should error when adding user with no username",
@@ -106,22 +111,12 @@
     {
       "title": "should error when adding user with user too long",
       "fullTitle": "User Create A User should error when adding user with user too long",
-      "duration": 1
+      "duration": 94
     },
     {
       "title": "should error when adding user with password too long",
       "fullTitle": "User Create A User should error when adding user with password too long",
-      "duration": 1
-    },
-    {
-      "title": "should login user with count 2",
-      "fullTitle": "User Create A User should login user with count 2",
-      "duration": 240
-    },
-    {
-      "title": "should fail to login user because of bad crednentials",
-      "fullTitle": "User Create A User should fail to login user because of bad crednentials",
-      "duration": 332
+      "duration": 92
     }
   ]
 }

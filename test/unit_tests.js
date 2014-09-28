@@ -4,11 +4,10 @@ var supertest = require("supertest");
 var User = require('../models/user');
 var mongoose = require('mongoose');
 
-
 before(function() {
     // create unit_tests database for testing locally
     // mongoose.connect('mongodb://localhost/unit_tests');
-    mongoose.connect('mongodb://dmar:foobar@proximus.modulusmongo.net:27017/vix2Ivig');
+    mongoose.connect('mongodb://test:foobar@proximus.modulusmongo.net:27017/gu4vineM');
     var db = mongoose.connection;
     db.on('error', console.error.bind(console, 'connection error:'));
     db.once('open', function callback() {
