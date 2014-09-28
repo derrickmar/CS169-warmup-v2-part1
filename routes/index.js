@@ -102,7 +102,7 @@ router.post('/users/login', function(req, res) {
 
 router.post('/TESTAPI/resetFixture', function(req, res) {
     // console.log(req.db);
-    req.db.dropDatabase();
+    var dropDb = req.db.dropDatabase();
     res.json({
         errCode: 1
     });

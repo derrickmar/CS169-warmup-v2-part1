@@ -89,8 +89,6 @@ describe('User', function() {
 			});
 		});
 
-
-
 		it('should login user with count 2', function(done) {
 			User.add("test1", "foobar", function(result) {
 				User.login("test1", "foobar", function(result) {

@@ -5,9 +5,9 @@
     "passes": 8,
     "pending": 0,
     "failures": 3,
-    "start": "2014-09-28T05:10:57.339Z",
-    "end": "2014-09-28T05:10:59.482Z",
-    "duration": 2143
+    "start": "2014-09-28T05:34:20.210Z",
+    "end": "2014-09-28T05:34:22.370Z",
+    "duration": 2160
   },
   "tests": [
     {
@@ -23,12 +23,12 @@
     {
       "title": "should create user without error",
       "fullTitle": "User Create A User should create user without error",
-      "duration": 2
+      "duration": 3
     },
     {
       "title": "should create user with properties",
       "fullTitle": "User Create A User should create user with properties",
-      "duration": 4
+      "duration": 5
     },
     {
       "title": "should save user without error",
@@ -37,7 +37,7 @@
     {
       "title": "should error when adding duplicate user",
       "fullTitle": "User Create A User should error when adding duplicate user",
-      "duration": 196
+      "duration": 202
     },
     {
       "title": "should error when adding user with no username",
@@ -47,7 +47,7 @@
     {
       "title": "should error when adding user with user too long",
       "fullTitle": "User Create A User should error when adding user with user too long",
-      "duration": 94
+      "duration": 91
     },
     {
       "title": "should error when adding user with password too long",
@@ -91,17 +91,17 @@
     {
       "title": "should create user without error",
       "fullTitle": "User Create A User should create user without error",
-      "duration": 2
+      "duration": 3
     },
     {
       "title": "should create user with properties",
       "fullTitle": "User Create A User should create user with properties",
-      "duration": 4
+      "duration": 5
     },
     {
       "title": "should error when adding duplicate user",
       "fullTitle": "User Create A User should error when adding duplicate user",
-      "duration": 196
+      "duration": 202
     },
     {
       "title": "should error when adding user with no username",
@@ -111,7 +111,7 @@
     {
       "title": "should error when adding user with user too long",
       "fullTitle": "User Create A User should error when adding user with user too long",
-      "duration": 94
+      "duration": 91
     },
     {
       "title": "should error when adding user with password too long",
