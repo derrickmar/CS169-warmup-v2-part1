@@ -19,11 +19,11 @@ class TestLoginUser(testLib.RestTestCase):
             expected['count']  = count
         self.assertDictEqual(expected, respData)
 
-    def assertLogin(self, respData, count = 1, errCode = testLib.RestTestCase.SUCCESS, password = "password", user = "user1"):
+    def assertLogin(self, respData, count = 1, errCode = testLib.RestTestCase.SUCCESS):
         """
         Check that the response data dictionary matches the expected values
         """
-        expected = { 'errCode' : errCode, 'password': password, 'user': user }
+        expected = { 'errCode' : errCode }
         if count is not None:
             expected['count']  = count
         self.assertDictEqual(expected, respData)

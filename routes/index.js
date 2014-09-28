@@ -85,8 +85,6 @@ router.post('/users/login', function(req, res) {
             // console.log(user.count);
             res.json({
                 errCode: User.SUCCESSFUL.num,
-                password: user.password,
-                user: user.user,
                 count: user.count
             });
         } else if (!user) {
