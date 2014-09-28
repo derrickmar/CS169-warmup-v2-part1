@@ -30,45 +30,45 @@ class TestLoginUser(testLib.RestTestCase):
 
 
     # tests======================================
-    # def testLogin1(self):
-    #     respData = self.makeRequest("/users/add", method="POST", data = { 'user' : 'user1', 'password' : 'password'} )
-    #     # print respData
-    #     self.assertResponse(respData, count = 1)
-    #     respLoginData = self.makeRequest("/users/login", method="POST", data = { 'user' : 'user1', 'password' : 'password'} )
-    #     # print respLoginData
-    #     self.assertLogin(respLoginData, count = 2)
+    def testLogin1(self):
+        respData = self.makeRequest("/users/add", method="POST", data = { 'user' : 'user1', 'password' : 'password'} )
+        # print respData
+        self.assertResponse(respData, count = 1)
+        respLoginData = self.makeRequest("/users/login", method="POST", data = { 'user' : 'user1', 'password' : 'password'} )
+        # print respLoginData
+        self.assertLogin(respLoginData, count = 2)
 
-    # def testLogin2(self):
-    #     respData = self.makeRequest("/users/add", method="POST", data = { 'user' : 'user1', 'password' : 'password'} )
-    #     # print respData
-    #     self.assertResponse(respData, count = 1)
-    #     respLoginData = self.makeRequest("/users/login", method="POST", data = { 'user' : 'user1', 'password' : 'password'} )
-    #     # print respLoginData
-    #     self.assertLogin(respLoginData, count = 2)
-    #     respLoginData = self.makeRequest("/users/login", method="POST", data = { 'user' : 'user1', 'password' : 'password'} )
-    #     self.assertLogin(respLoginData, count = 3)
+    def testLogin2(self):
+        respData = self.makeRequest("/users/add", method="POST", data = { 'user' : 'user1', 'password' : 'password'} )
+        # print respData
+        self.assertResponse(respData, count = 1)
+        respLoginData = self.makeRequest("/users/login", method="POST", data = { 'user' : 'user1', 'password' : 'password'} )
+        # print respLoginData
+        self.assertLogin(respLoginData, count = 2)
+        respLoginData = self.makeRequest("/users/login", method="POST", data = { 'user' : 'user1', 'password' : 'password'} )
+        self.assertLogin(respLoginData, count = 3)
 
-    # def testLogin3(self):
-    #     respData = self.makeRequest("/users/add", method="POST", data = { 'user' : 'user1', 'password' : 'password'} )
-    #     # print respData
-    #     self.assertResponse(respData, count = 1)
-    #     respLoginData = self.makeRequest("/users/login", method="POST", data = { 'user' : 'user1', 'password' : 'wrong_password'} )
-    #     # print respLoginData
-    #     self.assertResponse(respLoginData, count = None,  errCode = -1)
+    def testLogin3(self):
+        respData = self.makeRequest("/users/add", method="POST", data = { 'user' : 'user1', 'password' : 'password'} )
+        # print respData
+        self.assertResponse(respData, count = 1)
+        respLoginData = self.makeRequest("/users/login", method="POST", data = { 'user' : 'user1', 'password' : 'wrong_password'} )
+        # print respLoginData
+        self.assertResponse(respLoginData, count = None,  errCode = -1)
 
-    # def testAdd1(self):
-    #     respData = self.makeRequest("/users/add", method="POST", data = { 'user' : '', 'password' : 'password'} )
-    #     # print respData
-    #     self.assertResponse(respData, count = None, errCode = -3)
+    def testAdd1(self):
+        respData = self.makeRequest("/users/add", method="POST", data = { 'user' : '', 'password' : 'password'} )
+        # print respData
+        self.assertResponse(respData, count = None, errCode = -3)
 
-    # def testAdd2(self):
-    #     respData = self.makeRequest("/users/add", method="POST", data = { 'user' : 'user1', 'password' : 'password'} )
-    #     # print respData
-    #     duplicateUserData = self.makeRequest("/users/add", method="POST", data = { 'user' : 'user1', 'password' : 'password'} )
-    #     self.assertResponse(duplicateUserData, count = None, errCode = -2)
+    def testAdd2(self):
+        respData = self.makeRequest("/users/add", method="POST", data = { 'user' : 'user1', 'password' : 'password'} )
+        # print respData
+        duplicateUserData = self.makeRequest("/users/add", method="POST", data = { 'user' : 'user1', 'password' : 'password'} )
+        self.assertResponse(duplicateUserData, count = None, errCode = -2)
 
-    # def testAdd3(self):
-    #     respData = self.makeRequest("/users/add", method="POST", data = { 'user' : 'user1', 'password' : 'password'} )
-    #     # print respData
-    #     duplicateUserData = self.makeRequest("/users/add", method="POST", data = { 'user' : 'foobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarf', 'password' : 'password'} )
-    #     self.assertResponse(duplicateUserData, count = None, errCode = -3)
+    def testAdd3(self):
+        respData = self.makeRequest("/users/add", method="POST", data = { 'user' : 'user1', 'password' : 'password'} )
+        # print respData
+        duplicateUserData = self.makeRequest("/users/add", method="POST", data = { 'user' : 'foobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarfoobarf', 'password' : 'password'} )
+        self.assertResponse(duplicateUserData, count = None, errCode = -3)

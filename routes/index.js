@@ -102,7 +102,9 @@ router.post('/users/login', function(req, res) {
 
 router.post('/TESTAPI/resetFixture', function(req, res) {
     // console.log(req.db);
-    var dropDb = req.db.dropDatabase();
+    User.remove({}, function(err) { 
+		// console.log('collection removed') 
+	});
     res.json({
         errCode: 1
     });
