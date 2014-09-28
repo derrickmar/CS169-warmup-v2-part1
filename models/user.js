@@ -1,19 +1,4 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test');
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function callback () {
-    console.log('database connected successfully (in users.js)');  
-});
-
-var bcrypt = require('bcrypt-nodejs');
-
-function emptyPw(v) {
-    if (v == null) {
-        return '';
-    }
-    return v;
-}
 
 // user schema ========================
 var userSchema = mongoose.Schema({
@@ -22,7 +7,7 @@ var userSchema = mongoose.Schema({
     },
     password: {
         type: String,
-        set: emptyPw, // adding a setter for this
+        // set: emptyPw, // adding a setter for this
         default: ''
     },
     count: {
@@ -36,9 +21,10 @@ var userSchema = mongoose.Schema({
 // codes static variables ========================
 userSchema.statics.MAX_PASSWORD_LENGTH = 128;
 userSchema.statics.MAX_USERNAME_LENGTH = 128;
+userSchema.statics.UNKNOWNFAILURE = -100;
 
 userSchema.statics.SUCCESSFUL = {
- num: 1
+    num: 1
 };
 
 userSchema.statics.ERR_BAD_CREDENTIALS = {
@@ -59,40 +45,61 @@ userSchema.statics.ERR_USER_EXISTS = {
 };
 
 // static_methods ========================
-userSchema.statics.add = function(username, password) {
+userSchema.statics.add = function(username, password, cb) {
+    // console.log('IN ADD STATIC METHOD');
     User.findOne({
         'user': username
     }, function(err, user) {
         if (user) {
-            console.log('User already exists with username: ' + username);
-            return user.ERR_USER_EXISTS.num;
+            // console.log('User already exists with username: ' + user.user);
+            cb(User.ERR_USER_EXISTS.num);
+        } else {
+            var newUser = new User();
+            newUser.user = username;
+            newUser.password = password;
+            newUser.count = 1;
+            newUser.save(function(err) {
+                if (err) {
+                    // console.log(err.errors);
+                    if (err.errors.user) {
+                        cb(User.ERR_BAD_USERNAME.num);
+                    } else if (err.errors.password) {
+                        cb(User.ERR_BAD_PASSWORD.num);
+                    } else {
+                        cb(User.UNKNOWNFAILURE);
+                    }
+                } else {
+                    // console.log('user successfully added');
+                    cb(newUser.count);
+                }
+            });
         }
     });
-
-    var newUser = new User();
-    newUser.user = username;
-    newUser.password = newUser.generateHash(password);
-    newUser.count = 1;
-
-    newUser.save(function(err) {
-        if (err) {
-            console.log('Error in Saving user: ' + err);
-            throw err;
-        }
-    });
-    return newUser.count;
 };
+
+userSchema.statics.login = function(username, password, cb) {
+    User.findOne({
+        'user': username,
+        'password': password
+    }, function(err, user) {
+        if (err) {
+            // console.log(err);
+            cb(User.UNKNOWNFAILURE);
+        } else if (user) {
+            // console.log(user.count);
+            user.updateLogInCount();
+            // console.log(user.count);
+            cb(user.count);
+        } else if (!user) {
+            cb(User.ERR_BAD_CREDENTIALS.num);
+        } else {
+            // console.log('something is really wrong');
+            cb(User.UNKNOWNFAILURE);
+        }
+    });
+}
 
 // instance methods ======================
-userSchema.methods.generateHash = function(password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
-};;
-
-// checking if password is valid
-userSchema.methods.validPassword = function(password) {
-    return bcrypt.compareSync(password, this.password);
-};
-
 userSchema.methods.updateLogInCount = function() {
     this.count += 1;
     this.save();
@@ -104,16 +111,16 @@ var User = mongoose.model('User', userSchema);
 // validations ======================
 
 // User Validation
-User.schema.path('user').validate(function (value) {
+User.schema.path('user').validate(function(value) {
     if (!value) {
-        console.log('user validation function: value is null??');
+        // console.log('user validation function: value is null??');
         return false;
     }
     return value.length <= User.MAX_USERNAME_LENGTH && value.length > 0;
 }, User.ERR_BAD_USERNAME.str);
 
 // Password Validation
-User.schema.path('password').validate(function (value) {
+User.schema.path('password').validate(function(value) {
     if (!value) {
         // password can be empty
         return true;
