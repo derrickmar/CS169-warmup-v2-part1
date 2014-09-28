@@ -45,8 +45,6 @@ class TestLoginUser(testLib.RestTestCase):
         respLoginData = self.makeRequest("/users/login", method="POST", data = { 'user' : 'user1', 'password' : 'password'} )
         # print respLoginData
         self.assertLogin(respLoginData, count = 2)
-        respLoginData = self.makeRequest("/users/login", method="POST", data = { 'user' : 'user1', 'password' : 'password'} )
-        self.assertLogin(respLoginData, count = 3)
 
     def testLogin3(self):
         respData = self.makeRequest("/users/add", method="POST", data = { 'user' : 'user1', 'password' : 'password'} )
