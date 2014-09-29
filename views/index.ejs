@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Not searching for ejs</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<!-- HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+      <![endif]-->
+
+      <!-- styles -->
+      <link href="stylesheets/style.css" rel="stylesheet">
+      <link rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+      <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+  </head>
+  <body>
+
+  	<div class="container">
+  		<div class="row">
+  			<div class="col-sm-6 col-md-4 col-md-offset-4">
+  				<h1 class="text-center login-title">My CS 169 Warmup App </h1>
+  				<div id="content-err"></div>
+  				<div id="content-good"></div>
+  				<div id="full-content-success">
+  					<div id="content-success"></div>
+  					<button type="submit" id="logout_btn" class="btn btn-lg btn-primary btn-block">Log Out</button>
+  				</div>
+  				<div id="first-page">
+  					<div class="account-wall">
+  						<img src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=120" class="profile-img">
+  						<form class="form-signin">
+  							<input type="text" name="username" placeholder="Username" required="" autofocus="" class="form-control">
+  							<input type="password" name="password" placeholder="Password" required="" class="form-control">
+  						</form>
+  					</div>
+  					<button type="submit" id="login_btn" class="btn btn-lg btn-primary btn-block">Login</button><span class="clearfix"></span>
+  					<button type="submit" id="signup_btn" class="btn btn-lg btn-primary btn-block">Sign up</button><span class="clearfix"></span>
+  				</div>
+  			</div>
+  			<h1 class="text-center error-message"></h1>
+  		</div>
+  	</div>
+  	<script>
+  	$('#signup_btn').on('click', function() {
+  		$.ajax({
+  			headers: {
+  				Accept: "application/json; charset=utf-8",
+  			},
+  			// url: 'http://localhost:3000/users/add',
+  			url: 'http://serene-hollows-1846.herokuapp.com/users/add',
+  			type: 'POST',
+  			datatype: "JSON",
+  			data: {
+  				user: $('input[name="username"]').val(),
+  				password: $('input[name="password"]').val(),
+  			},
+  			success: function jsSuccess(data, textStatus, jqXHR) {
+  				console.log(data);
+  				if (data.errCode == 1) {
+  					$("#first-page").fadeOut();
+  					var username = $('input[name="username"]').val();
+  					var str = "Welcome " + username + ". You have logged in " + data.count + " times.";
+  					$('#content-success').html(str);
+  					$('#full-content-success').fadeIn();
+  					$('#content-good').html("Succesfully Logged In");
+  					$('#content-good').fadeIn();
+  					$('#content-err').fadeOut();
+  				} else if (data.errCode == -2) {
+  					$('#content-err').html("This username already exists. Please try again.");
+  					$('#content-err').fadeIn();
+			  		$('#content-good').fadeOut();
+  				} else if (data.errCode == -3) {
+  					$('#content-err').html("The user name should be non-empty and at most 128 characters long. Please try again.");
+  					$('#content-err').fadeIn();
+			  		$('#content-good').fadeOut();
+  				} else if (data.errCode == -4) {
+  					$('#content-err').html("The password should be at most 128 characters long. Please try again.");
+  					$('#content-err').fadeIn();
+			  		$('#content-good').fadeOut();
+  				} else {
+  					console.log("Something else is wrong");
+  				}
+  			},
+  			error: function jsError(jqXHR, textStatus, errorThrown) {
+  				console.log("ajax failed");
+  			}
+  		});
+  	});
+  	$('#login_btn').on('click', function() {
+  		$.ajax({
+  			headers: {
+  				Accept: "application/json; charset=utf-8",
+  			},
+  			url: 'http://serene-hollows-1846.herokuapp.com/users/login',
+  			// url: 'http://localhost:3000/users/login',
+  			// url: 'https://powerful-mountain-6862.herokuapp.com/users',
+  			type: 'POST',
+  			datatype: "JSON",
+  			data: {
+  				user: $('input[name="username"]').val(),
+  				password: $('input[name="password"]').val(),
+  			},
+  			success: function jsSuccess(data, textStatus, jqXHR) {
+  				console.log(data);
+  				if (data.errCode == 1) {
+  					$("#first-page").fadeOut();
+  					var username = $('input[name="username"]').val();
+  					var str = "Welcome " + username + ". You have logged in " + data.count + " times.";
+  					$('#content-success').html(str);
+  					$('#full-content-success').fadeIn();
+  					$('#content-err').fadeOut();
+  					$('#content-good').html("Succesfully Logged In");
+  					$('#content-good').fadeIn();
+  				} else if (data.errCode == -1) {
+  					$('#content-err').html("Invalid username and password combination. Please try again.");
+  					$('#content-err').fadeIn();
+			  		$('#content-good').fadeOut();
+  				} else if (data.errCode == -3) {
+  					$('#content-err').html("The user name should be non-empty and at most 128 characters long. Please try again.");
+  					$('#content-err').fadeIn();
+			  		$('#content-good').fadeOut();
+  				} else if (data.errCode == -4) {
+  					$('#content-err').html("The password should be at most 128 characters long. Please try again.");
+  					$('#content-err').fadeIn();
+			  		$('#content-good').fadeOut();
+  				} else {
+  					console.log("Something else is wrong");
+  				}
+  			},
+  			error: function jsError(jqXHR, textStatus, errorThrown) {
+  				console.log("ajax failed");
+  			}
+  		});
+  	});
+  	$('#logout_btn').on('click', function() {
+  		console.log('clicked login button');
+  		$('input[name="username"]').val("");
+  		$('input[name="password"]').val("");
+  		$("#first-page").fadeIn();
+  		$('#full-content-success').fadeOut();
+		$('#content-good').html("Succesfully Logged Out");
+  		$('#content-good').fadeIn();
+  	});
+  	</script>
+  </body>
+  </html>

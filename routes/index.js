@@ -15,9 +15,6 @@ router.use(function(req, res, next) {
 /* GET home page. */
 router.get('/', function(req, res) {
     res.render('index');
-    res.json({
-        message: 'Bear created!'
-    });
 });
 
 router.post('/users/add', function(req, res) {
