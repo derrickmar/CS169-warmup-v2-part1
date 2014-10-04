@@ -1,0 +1,19 @@
+Curl commands
+
+curl -v -X POST  -H "Content-type: application/json" -d '{"user":"foo", "password": ""}' -i http://localhost:3000/users/add
+
+curl -v -X POST  -H "Content-type: application/json" -d '{}' -i http://localhost:3000/TESTAPI/resetFixture
+
+
+curl -v -X POST  -H "Content-type: application/json" -d '{"user":"user1", "password": "password"}' -i http://serene-hollows-1846.herokuapp.com/users/add
+
+curl -v -X POST  -H "Content-type: application/json" -d '{}' -i http://serene-hollows-1846.herokuapp.com/TESTAPI/resetFixture
+
+
+Databases
+	mongo proximus.modulusmongo.net:27017/gyMaw5yj -u dmar -p foobar
+
+	Test database
+		mongodb://test:foobar@proximus.modulusmongo.net:27017/gu4vineM
+
+		mongo proximus.modulusmongo.net:27017/gu4vineM -u test -p foobar

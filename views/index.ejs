@@ -15,6 +15,7 @@
       <link href="stylesheets/style.css" rel="stylesheet">
       <link rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
       <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+      <script src="javascripts/jquery.cookie.js"></script>
 
   </head>
   <body>
@@ -45,13 +46,25 @@
   		</div>
   	</div>
   	<script>
+    var username_cookie = $.cookie('username');
+    console.log(username_cookie);
+    if (username_cookie) {
+      $("#first-page").hide();
+      var username = $('input[name="username"]').val();
+      var str = "Welcome " + username_cookie + ". You have logged in " + $.cookie('count') + " times.";
+      $('#content-success').html(str);
+      $('#full-content-success').fadeIn();
+      $('#content-good').html("The browser cookie is remembering you and keeping you in session");
+      $('#content-good').fadeIn();
+      $('#content-err').fadeOut();
+    }
   	$('#signup_btn').on('click', function() {
   		$.ajax({
   			headers: {
   				Accept: "application/json; charset=utf-8",
   			},
-  			// url: 'http://localhost:3000/users/add',
-  			url: 'http://serene-hollows-1846.herokuapp.com/users/add',
+  			url: 'http://localhost:3000/users/add',
+  			// url: 'http://serene-hollows-1846.herokuapp.com/users/add',
   			type: 'POST',
   			datatype: "JSON",
   			data: {
@@ -69,6 +82,10 @@
   					$('#content-good').html("Succesfully Logged In");
   					$('#content-good').fadeIn();
   					$('#content-err').fadeOut();
+            $.cookie("username", $('input[name="username"]').val(), { expires: 7, path: '/' });
+            $.cookie("count", data.count, { expires: 7, path: '/' });
+            console.log('made cookies??');
+            console.log($.cookie('username'));
   				} else if (data.errCode == -2) {
   					$('#content-err').html("This username already exists. Please try again.");
   					$('#content-err').fadeIn();
@@ -95,9 +112,8 @@
   			headers: {
   				Accept: "application/json; charset=utf-8",
   			},
-  			url: 'http://serene-hollows-1846.herokuapp.com/users/login',
-  			// url: 'http://localhost:3000/users/login',
-  			// url: 'https://powerful-mountain-6862.herokuapp.com/users',
+  			// url: 'http://serene-hollows-1846.herokuapp.com/users/login',
+  			url: 'http://localhost:3000/users/login',
   			type: 'POST',
   			datatype: "JSON",
   			data: {
@@ -115,6 +131,8 @@
   					$('#content-err').fadeOut();
   					$('#content-good').html("Succesfully Logged In");
   					$('#content-good').fadeIn();
+            $.cookie("username", $('input[name="username"]').val(), { expires: 7, path: '/' });
+            $.cookie("count", data.count, { expires: 7, path: '/' });
   				} else if (data.errCode == -1) {
   					$('#content-err').html("Invalid username and password combination. Please try again.");
   					$('#content-err').fadeIn();
@@ -142,6 +160,8 @@
   		$('input[name="password"]').val("");
   		$("#first-page").fadeIn();
   		$('#full-content-success').fadeOut();
+      $.removeCookie('username');
+      $.removeCookie('password');
 		$('#content-good').html("Succesfully Logged Out");
   		$('#content-good').fadeIn();
   	});
