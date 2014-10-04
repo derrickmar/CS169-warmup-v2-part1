@@ -58,101 +58,124 @@
       $('#content-good').fadeIn();
       $('#content-err').fadeOut();
     }
+
+    $('#haha').on('click', function() {
+      console.log('in here!');
+      username_value = $('input[name="username"]').val();
+      console.log(username_value);
+
+    });
+
   	$('#signup_btn').on('click', function() {
-  		$.ajax({
-  			headers: {
-  				Accept: "application/json; charset=utf-8",
-  			},
-  			url: 'http://localhost:3000/users/add',
-  			// url: 'http://serene-hollows-1846.herokuapp.com/users/add',
-  			type: 'POST',
-  			datatype: "JSON",
-  			data: {
-  				user: $('input[name="username"]').val(),
-  				password: $('input[name="password"]').val(),
-  			},
-  			success: function jsSuccess(data, textStatus, jqXHR) {
-  				console.log(data);
-  				if (data.errCode == 1) {
-  					$("#first-page").fadeOut();
-  					var username = $('input[name="username"]').val();
-  					var str = "Welcome " + username + ". You have logged in " + data.count + " times.";
-  					$('#content-success').html(str);
-  					$('#full-content-success').fadeIn();
-  					$('#content-good').html("Succesfully Logged In");
-  					$('#content-good').fadeIn();
-  					$('#content-err').fadeOut();
-            $.cookie("username", $('input[name="username"]').val(), { expires: 7, path: '/' });
-            $.cookie("count", data.count, { expires: 7, path: '/' });
-            console.log('made cookies??');
-            console.log($.cookie('username'));
-  				} else if (data.errCode == -2) {
-  					$('#content-err').html("This username already exists. Please try again.");
-  					$('#content-err').fadeIn();
-			  		$('#content-good').fadeOut();
-  				} else if (data.errCode == -3) {
-  					$('#content-err').html("The user name should be non-empty and at most 128 characters long. Please try again.");
-  					$('#content-err').fadeIn();
-			  		$('#content-good').fadeOut();
-  				} else if (data.errCode == -4) {
-  					$('#content-err').html("The password should be at most 128 characters long. Please try again.");
-  					$('#content-err').fadeIn();
-			  		$('#content-good').fadeOut();
-  				} else {
-  					console.log("Something else is wrong");
-  				}
-  			},
-  			error: function jsError(jqXHR, textStatus, errorThrown) {
-  				console.log("ajax failed");
-  			}
-  		});
+      username_value = $('input[name="username"]').val();
+
+      // CLIENT SIDE FORM VALIDATION: USERNAME
+      if (username_value.length == 0 || username_value.length > 128) {
+        $('#content-err').html("THIS IS CLIENT SIDE VALIDATION: The user name should be non-empty and at most 128 characters long. Please try again.");
+        $('#content-err').fadeIn();
+      } else {
+        $.ajax({
+          headers: {
+            Accept: "application/json; charset=utf-8",
+          },
+          url: 'http://localhost:3000/users/add',
+          // url: 'http://serene-hollows-1846.herokuapp.com/users/add',
+          type: 'POST',
+          datatype: "JSON",
+          data: {
+            user: $('input[name="username"]').val(),
+            password: $('input[name="password"]').val(),
+          },
+          success: function jsSuccess(data, textStatus, jqXHR) {
+            console.log(data);
+            if (data.errCode == 1) {
+              $("#first-page").fadeOut();
+              var username = $('input[name="username"]').val();
+              var str = "Welcome " + username + ". You have logged in " + data.count + " times.";
+              $('#content-success').html(str);
+              $('#full-content-success').fadeIn();
+              $('#content-good').html("Succesfully Logged In");
+              $('#content-good').fadeIn();
+              $('#content-err').fadeOut();
+              $.cookie("username", $('input[name="username"]').val(), { expires: 7, path: '/' });
+              $.cookie("count", data.count, { expires: 7, path: '/' });
+              console.log('made cookies??');
+              console.log($.cookie('username'));
+            } else if (data.errCode == -2) {
+              $('#content-err').html("This username already exists. Please try again.");
+              $('#content-err').fadeIn();
+              $('#content-good').fadeOut();
+            } else if (data.errCode == -3) {
+              $('#content-err').html("The user name should be non-empty and at most 128 characters long. Please try again.");
+              $('#content-err').fadeIn();
+              $('#content-good').fadeOut();
+            } else if (data.errCode == -4) {
+              $('#content-err').html("The password should be at most 128 characters long. Please try again.");
+              $('#content-err').fadeIn();
+              $('#content-good').fadeOut();
+            } else {
+              console.log("Something else is wrong");
+            }
+          },
+          error: function jsError(jqXHR, textStatus, errorThrown) {
+            console.log("ajax failed");
+          }
+        });
+      }
   	});
   	$('#login_btn').on('click', function() {
-  		$.ajax({
-  			headers: {
-  				Accept: "application/json; charset=utf-8",
-  			},
-  			// url: 'http://serene-hollows-1846.herokuapp.com/users/login',
-  			url: 'http://localhost:3000/users/login',
-  			type: 'POST',
-  			datatype: "JSON",
-  			data: {
-  				user: $('input[name="username"]').val(),
-  				password: $('input[name="password"]').val(),
-  			},
-  			success: function jsSuccess(data, textStatus, jqXHR) {
-  				console.log(data);
-  				if (data.errCode == 1) {
-  					$("#first-page").fadeOut();
-  					var username = $('input[name="username"]').val();
-  					var str = "Welcome " + username + ". You have logged in " + data.count + " times.";
-  					$('#content-success').html(str);
-  					$('#full-content-success').fadeIn();
-  					$('#content-err').fadeOut();
-  					$('#content-good').html("Succesfully Logged In");
-  					$('#content-good').fadeIn();
-            $.cookie("username", $('input[name="username"]').val(), { expires: 7, path: '/' });
-            $.cookie("count", data.count, { expires: 7, path: '/' });
-  				} else if (data.errCode == -1) {
-  					$('#content-err').html("Invalid username and password combination. Please try again.");
-  					$('#content-err').fadeIn();
-			  		$('#content-good').fadeOut();
-  				} else if (data.errCode == -3) {
-  					$('#content-err').html("The user name should be non-empty and at most 128 characters long. Please try again.");
-  					$('#content-err').fadeIn();
-			  		$('#content-good').fadeOut();
-  				} else if (data.errCode == -4) {
-  					$('#content-err').html("The password should be at most 128 characters long. Please try again.");
-  					$('#content-err').fadeIn();
-			  		$('#content-good').fadeOut();
-  				} else {
-  					console.log("Something else is wrong");
-  				}
-  			},
-  			error: function jsError(jqXHR, textStatus, errorThrown) {
-  				console.log("ajax failed");
-  			}
-  		});
+      username_value = $('input[name="username"]').val();
+      // CLIENT SIDE FORM VALIDATION: USERNAME
+      if (username_value.length == 0 || username_value.length > 128) {
+        $('#content-err').html("THIS IS CLIENT SIDE VALIDATION: The user name should be non-empty and at most 128 characters long. Please try again.");
+        $('#content-err').fadeIn();
+      } else {
+    		$.ajax({
+    			headers: {
+    				Accept: "application/json; charset=utf-8",
+    			},
+    			// url: 'http://serene-hollows-1846.herokuapp.com/users/login',
+    			url: 'http://localhost:3000/users/login',
+    			type: 'POST',
+    			datatype: "JSON",
+    			data: {
+    				user: $('input[name="username"]').val(),
+    				password: $('input[name="password"]').val(),
+    			},
+    			success: function jsSuccess(data, textStatus, jqXHR) {
+    				console.log(data);
+    				if (data.errCode == 1) {
+    					$("#first-page").fadeOut();
+    					var username = $('input[name="username"]').val();
+    					var str = "Welcome " + username + ". You have logged in " + data.count + " times.";
+    					$('#content-success').html(str);
+    					$('#full-content-success').fadeIn();
+    					$('#content-err').fadeOut();
+    					$('#content-good').html("Succesfully Logged In");
+    					$('#content-good').fadeIn();
+              $.cookie("username", $('input[name="username"]').val(), { expires: 7, path: '/' });
+              $.cookie("count", data.count, { expires: 7, path: '/' });
+    				} else if (data.errCode == -1) {
+    					$('#content-err').html("Invalid username and password combination. Please try again.");
+    					$('#content-err').fadeIn();
+  			  		$('#content-good').fadeOut();
+    				} else if (data.errCode == -3) {
+    					$('#content-err').html("The user name should be non-empty and at most 128 characters long. Please try again.");
+    					$('#content-err').fadeIn();
+  			  		$('#content-good').fadeOut();
+    				} else if (data.errCode == -4) {
+    					$('#content-err').html("The password should be at most 128 characters long. Please try again.");
+    					$('#content-err').fadeIn();
+  			  		$('#content-good').fadeOut();
+    				} else {
+    					console.log("Something else is wrong");
+    				}
+    			},
+    			error: function jsError(jqXHR, textStatus, errorThrown) {
+    				console.log("ajax failed");
+    			}
+    		});
+      }
   	});
   	$('#logout_btn').on('click', function() {
   		console.log('clicked login button');
